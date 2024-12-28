@@ -28,8 +28,8 @@ const handleLoginSuccess = (response: Types.Auth.Response) => {
         store.user.picture = decoded.picture;
         store.user.given_name = decoded.given_name;
         store.user.family_name = decoded.family_name;
-        $cookie.clientId.set(decoded.aud);
-        store.user.id = decoded.aud;
+        $cookie.clientId.set(decoded.sub);
+        store.user.id = decoded.sub;
         navigateTo({ name: 'index' });
       }
     }
