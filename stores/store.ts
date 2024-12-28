@@ -38,6 +38,7 @@ export const useStore = defineStore('store', () => {
     const clientId = $cookie.clientId.get();
     if (clientId) {
       const password = clientId.replace(/[^a-zA-Z0-9]/g, '').slice(0, 32);
+      console.log('Crypto password: ' + password);
       return password;
     }
     return '';
@@ -49,7 +50,7 @@ export const useStore = defineStore('store', () => {
       const password = getCryptoPassword();
       if (password) {
         const encrypted = AesCtr.encrypt(text, password, nBits);
-        console.log(encrypted);
+        console.log('Encrypted: ' + encrypted);
         return encrypted;
       } else {
         throw Error('No client id');
@@ -66,7 +67,7 @@ export const useStore = defineStore('store', () => {
       const password = getCryptoPassword();
       if (password) {
         const decrypted = AesCtr.decrypt(text, password, nBits);
-        console.log(decrypted);
+        console.log('Decrypted: ' + decrypted);
         return decrypted;
       } else {
         throw Error('No client id');

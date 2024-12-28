@@ -21,18 +21,17 @@ const handleLoginSuccess = (response: Types.Auth.Response) => {
       toast.add({ severity: 'success', summary: 'Успешная авторизация', life: 2000 });
       $cookie.token.set(response.credential);
       const decoded = decodeJwt(response.credential);
+      console.log(decoded);
       if (decoded) {
         store.user.name = decoded.name;
         store.user.email = decoded.email;
         store.user.picture = decoded.picture;
         store.user.given_name = decoded.given_name;
         store.user.family_name = decoded.family_name;
+        $cookie.clientId.set(decoded.aud);
+        store.user.id = decoded.aud;
+        navigateTo({ name: 'index' });
       }
-    }
-    if (response.clientId) {
-      $cookie.clientId.set(response.clientId);
-      store.user.id = response.clientId;
-      navigateTo({ name: 'index' });
     }
   }
 };
